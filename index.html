@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B0C0F" />
+  <title>HorizonTechX — Music Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient__orb ambient__orb--a"></span>
+    <span class="ambient__orb ambient__orb--b"></span>
+    <span class="ambient__orb ambient__orb--c"></span>
+  </div>
+
+  <div class="shell" id="appShell">
+    <aside class="sidebar" id="sidebar" aria-label="Primary">
+      <div class="brand">
+        <div class="brand__icon"><i class="ri-music-2-fill" aria-hidden="true"></i></div>
+        <div class="brand__name">
+          <span>Horizon</span><span class="brand__accent">TechX</span>
+        </div>
+      </div>
+
+      <nav class="sidebar__group" aria-label="Browse">
+        <span class="sidebar__label">Menu</span>
+        <button class="nav-item is-active" data-view="home" type="button">
+          <i class="ri-home-5-line" aria-hidden="true"></i><span>Home</span>
+        </button>
+        <button class="nav-item" data-view="search" type="button">
+          <i class="ri-search-line" aria-hidden="true"></i><span>Search</span>
+        </button>
+        <button class="nav-item" data-view="library" type="button">
+          <i class="ri-library-line" aria-hidden="true"></i><span>Your Library</span>
+        </button>
+      </nav>
+
+      <nav class="sidebar__group" aria-label="Collection">
+        <span class="sidebar__label">Collection</span>
+        <button class="nav-item" data-view="liked" type="button">
+          <i class="ri-heart-3-line" aria-hidden="true"></i><span>Liked Songs</span>
+        </button>
+        <button class="nav-item" data-view="recent" type="button">
+          <i class="ri-history-line" aria-hidden="true"></i><span>Recently Played</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__group sidebar__group--playlists">
+        <div class="sidebar__group-head">
+          <span class="sidebar__label">Playlists</span>
+          <button class="icon-btn icon-btn--sm" id="sidebarCreatePlaylistBtn" type="button" aria-label="Create playlist" title="New playlist">
+            <i class="ri-add-line" aria-hidden="true"></i>
+          </button>
+        </div>
+        <ul class="sidebar__playlists" id="sidebarPlaylists"></ul>
+      </div>
+
+      <div class="sidebar__footer">
+        <button class="nav-item" id="importLocalBtn" type="button">
+          <i class="ri-folder-music-line" aria-hidden="true"></i><span>Import Local Files</span>
+        </button>
+        <button class="nav-item" id="shortcutsBtn" type="button">
+          <i class="ri-keyboard-line" aria-hidden="true"></i><span>Shortcuts</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="mobileMenuBtn" type="button" aria-label="Open menu">
+          <i class="ri-menu-line" aria-hidden="true"></i>
+        </button>
+        <div class="topbar__title-wrap">
+          <h1 class="topbar__title" id="viewTitle">Home</h1>
+          <p class="topbar__subtitle" id="viewSubtitle">Welcome back to HorizonTechX</p>
+        </div>
+        <div class="topbar__actions">
+          <div class="search-box" id="searchBox" hidden>
+            <i class="ri-search-line" aria-hidden="true"></i>
+            <input type="search" id="searchInput" placeholder="Search songs, artists…" aria-label="Search" autocomplete="off" />
+            <button class="icon-btn icon-btn--sm" id="clearSearchBtn" type="button" aria-label="Clear search" hidden>
+              <i class="ri-close-line" aria-hidden="true"></i>
+            </button>
+          </div>
+          <button class="icon-btn" id="searchToggleBtn" type="button" aria-label="Toggle search" title="Search (/)">
+            <i class="ri-search-line" aria-hidden="true"></i>
+          </button>
+          <button class="icon-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+            <i class="ri-sun-line" aria-hidden="true"></i>
+          </button>
+          <button class="icon-btn" id="importLocalTopBtn" type="button" aria-label="Import files" title="Import files">
+            <i class="ri-folder-music-line" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+
+      <main class="content" id="main-content" tabindex="-1">
+        <section class="view is-active" id="view-home" aria-labelledby="viewTitle">
+          <div class="hero">
+            <div class="hero__content">
+              <span class="hero__eyebrow"><i class="ri-sparkling-fill" aria-hidden="true"></i> Premium listening</span>
+              <h2 class="hero__heading">Feel every beat.<br /><span>Own the moment.</span></h2>
+              <p class="hero__copy">An immersive music player built for focus and discovery. Stream the library or bring your own audio.</p>
+              <div class="hero__actions">
+                <button class="btn btn--primary" id="heroPlayAllBtn" type="button">
+                  <i class="ri-play-fill" aria-hidden="true"></i> Play all songs
+                </button>
+                <button class="btn btn--ghost" id="heroShuffleBtn" type="button">
+                  <i class="ri-shuffle-line" aria-hidden="true"></i> Shuffle play
+                </button>
+              </div>
+            </div>
+            <div class="hero__visual" aria-hidden="true">
+              <div class="vinyl">
+                <div class="vinyl__disc" id="vinylDisc">
+                  <span class="vinyl__groove"></span>
+                  <span class="vinyl__groove"></span>
+                  <span class="vinyl__groove"></span>
+                  <span class="vinyl__label"></span>
+                </div>
+                <div class="vinyl__shadow"></div>
+              </div>
+            </div>
+          </div>
+
+          <section class="shelf" aria-labelledby="featuredHeading">
+            <div class="shelf__head"><h3 id="featuredHeading">Featured playlists</h3></div>
+            <div class="card-grid" id="featuredGrid"></div>
+          </section>
+
+          <section class="shelf" aria-labelledby="recentHeading">
+            <div class="shelf__head">
+              <h3 id="recentHeading">Recently played</h3>
+              <button class="link-btn" data-view="recent" type="button">View all <i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+            </div>
+            <div class="card-grid" id="recentGrid"></div>
+          </section>
+
+          <section class="shelf" aria-labelledby="allHeading">
+            <div class="shelf__head"><h3 id="allHeading">All songs</h3></div>
+            <div class="track-list" id="homeTrackList"></div>
+          </section>
+        </section>
+
+        <section class="view" id="view-search" aria-labelledby="viewTitle">
+          <div class="search-head">
+            <label class="search-input">
+              <i class="ri-search-line" aria-hidden="true"></i>
+              <input type="search" id="searchViewInput" placeholder="Search songs, artists, albums…" aria-label="Search" autocomplete="off" />
+            </label>
+          </div>
+          <div class="track-list" id="searchResults"></div>
+          <div class="empty" id="searchEmpty" hidden>
+            <div class="empty__icon"><i class="ri-search-eye-line" aria-hidden="true"></i></div>
+            <h4>No matches found</h4>
+            <p>Try a different song title, artist, or album name.</p>
+          </div>
+        </section>
+
+        <section class="view" id="view-library" aria-labelledby="viewTitle">
+          <div class="shelf__head"><h3>Your playlists</h3></div>
+          <div class="card-grid" id="libraryPlaylistGrid"></div>
+          <div class="shelf__head shelf__head--spaced"><h3>All songs</h3></div>
+          <div class="track-list" id="libraryTrackList"></div>
+        </section>
+
+        <section class="view" id="view-liked" aria-labelledby="viewTitle">
+          <div class="banner banner--liked">
+            <div class="banner__icon"><i class="ri-heart-3-fill" aria-hidden="true"></i></div>
+            <div class="banner__text">
+              <span class="banner__eyebrow">Your collection</span>
+              <h2>Liked Songs</h2>
+              <p id="likedCount">0 songs</p>
+            </div>
+          </div>
+          <div class="track-list" id="likedTrackList"></div>
+          <div class="empty" id="likedEmpty" hidden>
+            <div class="empty__icon"><i class="ri-heart-3-line" aria-hidden="true"></i></div>
+            <h4>No liked songs yet</h4>
+            <p>Tap the heart on any track to save it here.</p>
+          </div>
+        </section>
+
+        <section class="view" id="view-recent" aria-labelledby="viewTitle">
+          <div class="banner banner--recent">
+            <div class="banner__icon"><i class="ri-history-line" aria-hidden="true"></i></div>
+            <div class="banner__text">
+              <span class="banner__eyebrow">Your history</span>
+              <h2>Recently Played</h2>
+              <p id="recentCount">0 songs</p>
+            </div>
+          </div>
+          <div class="track-list" id="recentTrackList"></div>
+          <div class="empty" id="recentEmpty" hidden>
+            <div class="empty__icon"><i class="ri-history-line" aria-hidden="true"></i></div>
+            <h4>Nothing played yet</h4>
+            <p>Songs you play will appear here.</p>
+          </div>
+        </section>
+
+        <section class="view" id="view-playlist" aria-labelledby="viewTitle">
+          <div class="banner banner--playlist">
+            <div class="banner__icon"><i class="ri-play-list-2-line" aria-hidden="true"></i></div>
+            <div class="banner__text">
+              <span class="banner__eyebrow">Playlist</span>
+              <h2 id="playlistTitle">Playlist</h2>
+              <p id="playlistMeta">0 songs</p>
+            </div>
+            <div class="banner__actions">
+              <button class="btn btn--primary" id="playPlaylistBtn" type="button">
+                <i class="ri-play-fill" aria-hidden="true"></i> Play
+              </button>
+              <button class="icon-btn" id="renamePlaylistBtn" type="button" aria-label="Rename playlist" title="Rename">
+                <i class="ri-edit-line" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn icon-btn--danger" id="deletePlaylistBtn" type="button" aria-label="Delete playlist" title="Delete">
+                <i class="ri-delete-bin-line" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="track-list" id="playlistTrackList"></div>
+          <div class="empty" id="playlistEmpty" hidden>
+            <div class="empty__icon"><i class="ri-play-list-add-line" aria-hidden="true"></i></div>
+            <h4>This playlist is empty</h4>
+            <p>Add songs from any track list using the “+” button.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <footer class="player-bar" id="playerBar" aria-label="Playback">
+    <div class="player-bar__track">
+      <div class="artwork artwork--sm" id="nowArtwork" data-fallback="♪"></div>
+      <div class="player-bar__meta">
+        <span class="player-bar__title" id="nowTitle">Nothing playing</span>
+        <span class="player-bar__artist" id="nowArtist">Select a track</span>
+      </div>
+      <button class="icon-btn icon-btn--fav" id="nowFavoriteBtn" type="button" aria-label="Toggle favorite" title="Favorite (L)" disabled>
+        <i class="ri-heart-3-line" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="player-bar__center">
+      <div class="transport">
+        <button class="icon-btn" id="shuffleBtn" type="button" aria-label="Shuffle" title="Shuffle" aria-pressed="false">
+          <i class="ri-shuffle-line" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="prevBtn" type="button" aria-label="Previous" title="Previous (P)">
+          <i class="ri-skip-back-fill" aria-hidden="true"></i>
+        </button>
+        <button class="play-btn" id="playPauseBtn" type="button" aria-label="Play" title="Play/Pause (Space)">
+          <i class="ri-play-fill" id="playPauseIcon" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="nextBtn" type="button" aria-label="Next" title="Next (N)">
+          <i class="ri-skip-forward-fill" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="repeatBtn" type="button" aria-label="Repeat: off" title="Repeat" aria-pressed="false">
+          <i class="ri-repeat-line" id="repeatIcon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="seek-row">
+        <span class="time" id="currentTime">0:00</span>
+        <input class="range" type="range" id="seekBar" min="0" max="1000" value="0" step="1" aria-label="Seek" />
+        <span class="time" id="durationTime">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-bar__right">
+      <button class="icon-btn" id="visualizerToggleBtn" type="button" aria-label="Visualizer" title="Visualizer" aria-pressed="false">
+        <i class="ri-bar-chart-box-line" aria-hidden="true"></i>
+      </button>
+      <button class="icon-btn" id="lyricsToggleBtn" type="button" aria-label="Lyrics" title="Lyrics">
+        <i class="ri-file-music-line" aria-hidden="true"></i>
+      </button>
+      <button class="icon-btn" id="muteBtn" type="button" aria-label="Mute" title="Mute (M)">
+        <i class="ri-volume-up-line" id="volumeIcon" aria-hidden="true"></i>
+      </button>
+      <input class="range range--volume" type="range" id="volumeBar" min="0" max="100" value="80" step="1" aria-label="Volume" />
+      <button class="icon-btn" id="expandPlayerBtn" type="button" aria-label="Expand player" title="Expand">
+        <i class="ri-expand-diagonal-line" aria-hidden="true"></i>
+      </button>
+    </div>
+  </footer>
+
+  <div class="expanded" id="expandedPlayer" hidden role="dialog" aria-modal="true" aria-label="Expanded player">
+    <button class="icon-btn expanded__close" id="closeExpandedBtn" type="button" aria-label="Close expanded player">
+      <i class="ri-arrow-down-line" aria-hidden="true"></i>
+    </button>
+    <div class="expanded__inner">
+      <div class="expanded__art">
+        <div class="artwork artwork--lg" id="expandedArtwork" data-fallback="♪"></div>
+        <canvas class="visualizer" id="visualizerCanvas" aria-label="Audio visualizer" role="img" hidden></canvas>
+      </div>
+      <div class="expanded__info">
+        <h2 id="expandedTitle">Nothing playing</h2>
+        <p id="expandedArtist">Select a track</p>
+      </div>
+      <div class="expanded__seek">
+        <span class="time" id="expandedCurrentTime">0:00</span>
+        <input class="range" type="range" id="expandedSeekBar" min="0" max="1000" value="0" step="1" aria-label="Seek" />
+        <span class="time" id="expandedDurationTime">0:00</span>
+      </div>
+      <div class="expanded__controls">
+        <button class="icon-btn" id="expandedShuffleBtn" type="button" aria-label="Shuffle" aria-pressed="false">
+          <i class="ri-shuffle-line" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="expandedPrevBtn" type="button" aria-label="Previous">
+          <i class="ri-skip-back-fill" aria-hidden="true"></i>
+        </button>
+        <button class="play-btn play-btn--lg" id="expandedPlayPauseBtn" type="button" aria-label="Play">
+          <i class="ri-play-fill" id="expandedPlayPauseIcon" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="expandedNextBtn" type="button" aria-label="Next">
+          <i class="ri-skip-forward-fill" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="expandedRepeatBtn" type="button" aria-label="Repeat" aria-pressed="false">
+          <i class="ri-repeat-line" id="expandedRepeatIcon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="expanded__extras">
+        <button class="icon-btn icon-btn--fav" id="expandedFavoriteBtn" type="button" aria-label="Toggle favorite">
+          <i class="ri-heart-3-line" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="expandedLyricsBtn" type="button" aria-label="Lyrics">
+          <i class="ri-file-music-line" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn" id="expandedVisualizerBtn" type="button" aria-label="Visualizer" aria-pressed="false">
+          <i class="ri-bar-chart-box-line" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="lyrics" id="lyricsPanel" hidden aria-label="Lyrics">
+    <div class="lyrics__head">
+      <div>
+        <span class="lyrics__eyebrow">Now playing</span>
+        <h3>Lyrics</h3>
+      </div>
+      <button class="icon-btn" id="closeLyricsBtn" type="button" aria-label="Close lyrics">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="lyrics__body" id="lyricsBody"></div>
+  </aside>
+
+  <div class="popover" id="trackMenu" hidden role="menu" aria-label="Track actions"></div>
+
+  <div class="backdrop" id="dialogBackdrop" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <h3 id="dialogTitle">Dialog</h3>
+      <p id="dialogMessage"></p>
+      <div class="dialog__input-wrap" id="dialogInputWrap" hidden>
+        <input type="text" id="dialogInput" maxlength="60" aria-label="Value" />
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" id="dialogCancelBtn" type="button">Cancel</button>
+        <button class="btn btn--primary" id="dialogConfirmBtn" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="backdrop" id="shortcutsBackdrop" hidden>
+    <div class="dialog dialog--wide" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle">
+      <h3 id="shortcutsTitle">Keyboard shortcuts</h3>
+      <div class="shortcuts">
+        <div><kbd>Space</kbd><span>Play / Pause</span></div>
+        <div><kbd>→</kbd><span>Seek +5s</span></div>
+        <div><kbd>←</kbd><span>Seek -5s</span></div>
+        <div><kbd>↑</kbd><span>Volume up</span></div>
+        <div><kbd>↓</kbd><span>Volume down</span></div>
+        <div><kbd>N</kbd><span>Next track</span></div>
+        <div><kbd>P</kbd><span>Previous track</span></div>
+        <div><kbd>M</kbd><span>Mute / Unmute</span></div>
+        <div><kbd>L</kbd><span>Toggle favorite</span></div>
+        <div><kbd>/</kbd><span>Focus search</span></div>
+        <div><kbd>Esc</kbd><span>Close panel</span></div>
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--primary" id="shortcutsCloseBtn" type="button">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toastStack" aria-live="polite" aria-atomic="false"></div>
+
+  <input type="file" id="localFileInput" accept="audio/*" multiple hidden />
+
+  <audio id="audioElement" preload="metadata"></audio>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
